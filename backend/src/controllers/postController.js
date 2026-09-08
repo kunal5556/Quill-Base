@@ -5,6 +5,8 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const ApiError = require("../utils/ApiError");
 const asyncHandler = require("../utils/asyncHandler");
+const cloudinaryService = require("../utils/cloudinaryService");
+const escapeRegex = require("../utils/escapeRegex");
 const sanitizeContent = require("../utils/sanitizeContent");
 const sendResponse = require("../utils/sendResponse");
 
@@ -17,7 +19,7 @@ const sortOptions = {
 };
 
 const buildSearchFilter = (search) => {
-  const pattern = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+  const pattern = new RegExp(escapeRegex(search), "i");
 
   return { $or: [{ title: pattern }, { excerpt: pattern }] };
 };
@@ -132,6 +134,7 @@ const updatePost = asyncHandler(async (req, res) => {
   const { title, excerpt, content, category, status, coverImage } = req.body;
 
   const post = await findPostOrFail(req.params.id);
+  const previousImageId = post.coverImage.publicId;
 
   if (category) {
     await findCategoryOrFail(category);
@@ -160,6 +163,10 @@ const updatePost = asyncHandler(async (req, res) => {
 
   await post.save();
 
+  if (previousImageId && previousImageId !== post.coverImage.publicId) {
+    await cloudinaryService.deleteImage(previousImageId);
+  }
+
   sendResponse(res, 200, post);
 });
 
@@ -178,6 +185,7 @@ const deletePost = asyncHandler(async (req, res) => {
   await Comment.deleteMany({ post: post._id });
   await Like.deleteMany({ post: post._id });
   await post.deleteOne();
+  await cloudinaryService.deleteImage(post.coverImage.publicId);
 
   sendResponse(res, 200, { message: "Post deleted" });
 });

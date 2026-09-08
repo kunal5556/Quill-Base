@@ -1,3 +1,4 @@
+const multer = require("multer");
 const ApiError = require("../utils/ApiError");
 
 const notFound = (req, res, next) => {
@@ -15,6 +16,9 @@ const errorHandler = (err, req, res, next) => {
     statusCode = err.statusCode;
     message = err.message;
     errors = err.errors;
+  } else if (err instanceof multer.MulterError) {
+    statusCode = 400;
+    message = err.code === "LIMIT_FILE_SIZE" ? "Image must be 2MB or smaller" : "Image upload failed";
   } else if (err.name === "CastError") {
     statusCode = 400;
     message = "Invalid id";
