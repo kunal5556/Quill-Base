@@ -1,9 +1,11 @@
+import Layout from "./components/layout/Layout";
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
   return (
-    <div className="app-shell">
-      <h1>Quill Base</h1>
-      <p>Blog and content management system</p>
-    </div>
+    <Layout>
+      <AppRoutes />
+    </Layout>
   );
 }
 

@@ -1,0 +1,91 @@
+:root {
+  --qb-primary: #2c3e70;
+  --qb-primary-dark: #1e2a4f;
+  --qb-accent: #e07a5f;
+  --qb-text: #2b2b2b;
+  --qb-muted: #6c757d;
+  --qb-surface: #ffffff;
+  --qb-background: #f6f7f9;
+  --qb-border: #e3e6ea;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  color: var(--qb-text);
+  background-color: var(--qb-background);
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 600;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.page-subtitle {
+  color: var(--qb-muted);
+  margin-bottom: 1.5rem;
+}
+
+.app-main {
+  flex: 1;
+}
+
+.navbar-brand-text {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.site-navbar {
+  background-color: var(--qb-primary);
+}
+
+.site-navbar .nav-link,
+.site-navbar .navbar-brand {
+  color: #ffffff;
+}
+
+.site-navbar .nav-link:hover,
+.site-navbar .nav-link.active {
+  color: var(--qb-accent);
+}
+
+.site-footer {
+  background-color: var(--qb-primary-dark);
+  color: #dfe3ec;
+  padding: 1.25rem 0;
+}
+
+.card {
+  border: 1px solid var(--qb-border);
+  background-color: var(--qb-surface);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 18px rgba(20, 30, 60, 0.12);
+  transform: translateY(-2px);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--qb-muted);
+  padding: 3rem 1rem;
+}
+
+.empty-state-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--qb-border);
+}

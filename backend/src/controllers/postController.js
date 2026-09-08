@@ -41,6 +41,14 @@ const applyStatus = (post, status) => {
   }
 };
 
+const removeImage = async (publicId) => {
+  try {
+    await cloudinaryService.deleteImage(publicId);
+  } catch (error) {
+    console.error(`Failed to remove image ${publicId}: ${error.message}`);
+  }
+};
+
 const findCategoryOrFail = async (categoryId) => {
   const category = await Category.findById(categoryId);
 
@@ -164,7 +172,7 @@ const updatePost = asyncHandler(async (req, res) => {
   await post.save();
 
   if (previousImageId && previousImageId !== post.coverImage.publicId) {
-    await cloudinaryService.deleteImage(previousImageId);
+    await removeImage(previousImageId);
   }
 
   sendResponse(res, 200, post);
@@ -185,7 +193,7 @@ const deletePost = asyncHandler(async (req, res) => {
   await Comment.deleteMany({ post: post._id });
   await Like.deleteMany({ post: post._id });
   await post.deleteOne();
-  await cloudinaryService.deleteImage(post.coverImage.publicId);
+  await removeImage(post.coverImage.publicId);
 
   sendResponse(res, 200, { message: "Post deleted" });
 });

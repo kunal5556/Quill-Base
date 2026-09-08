@@ -7,9 +7,12 @@ const {
   updatePostStatus,
   deletePost,
 } = require("../controllers/postController");
+const { getPostComments, createComment } = require("../controllers/commentController");
+const { likePost, unlikePost } = require("../controllers/likeController");
 const { protect, adminOnly, optionalAuth } = require("../middleware/authMiddleware");
 const validate = require("../middleware/validateMiddleware");
 const { idParamSchema } = require("../validations/commonValidation");
+const { createCommentSchema, commentListQuerySchema } = require("../validations/commentValidation");
 const {
   createPostSchema,
   updatePostSchema,
@@ -43,5 +46,11 @@ router.patch(
 );
 
 router.delete("/:id", protect, adminOnly, validate(idParamSchema, "params"), deletePost);
+
+router.get("/:postId/comments", validate(commentListQuerySchema, "query"), getPostComments);
+router.post("/:postId/comments", protect, validate(createCommentSchema), createComment);
+
+router.post("/:postId/like", protect, likePost);
+router.delete("/:postId/like", protect, unlikePost);
 
 module.exports = router;
