@@ -1,11 +1,14 @@
+import AuthInitializer from "./components/auth/AuthInitializer";
 import Layout from "./components/layout/Layout";
 import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
-    <Layout>
-      <AppRoutes />
-    </Layout>
+    <AuthInitializer>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </AuthInitializer>
   );
 }
 

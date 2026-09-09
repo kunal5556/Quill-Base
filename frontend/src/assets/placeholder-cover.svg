@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-label="No cover image">
+  <rect width="640" height="360" fill="#e9ecef" />
+  <circle cx="240" cy="140" r="34" fill="#ced4da" />
+  <path d="M120 280 L250 170 L340 245 L420 190 L520 280 Z" fill="#ced4da" />
+  <text x="320" y="330" font-family="Segoe UI, Arial, sans-serif" font-size="22" fill="#adb5bd" text-anchor="middle">Quill Base</text>
+</svg>

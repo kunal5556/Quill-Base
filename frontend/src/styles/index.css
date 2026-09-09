@@ -78,6 +78,20 @@ h5 {
   transform: translateY(-2px);
 }
 
+.post-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.post-card-title {
+  color: var(--qb-text);
+}
+
+.post-card-title:hover {
+  color: var(--qb-primary);
+}
+
 .empty-state {
   text-align: center;
   color: var(--qb-muted);
