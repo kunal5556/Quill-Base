@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminRoute from "./AdminRoute";
+import AdminLayout from "../components/admin/AdminLayout";
 import Home from "../pages/Home";
 import PostDetails from "../pages/PostDetails";
 import Categories from "../pages/Categories";
@@ -28,12 +29,14 @@ function AppRoutes() {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/posts" element={<ManagePosts />} />
-          <Route path="/admin/posts/new" element={<PostForm />} />
-          <Route path="/admin/posts/:id/edit" element={<PostForm />} />
-          <Route path="/admin/categories" element={<ManageCategories />} />
-          <Route path="/admin/comments" element={<ManageComments />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="posts" element={<ManagePosts />} />
+            <Route path="posts/new" element={<PostForm />} />
+            <Route path="posts/:id/edit" element={<PostForm />} />
+            <Route path="categories" element={<ManageCategories />} />
+            <Route path="comments" element={<ManageComments />} />
+          </Route>
         </Route>
       </Route>
 

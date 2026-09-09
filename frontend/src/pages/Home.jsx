@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import CategoryList from "../components/categories/CategoryList";
 import Pagination from "../components/common/Pagination";
 import PostGrid from "../components/posts/PostGrid";
@@ -6,6 +7,8 @@ import { useGetCategoriesQuery } from "../features/categories/categoriesApi";
 import { useGetPostsQuery } from "../features/posts/postsApi";
 
 function Home() {
+  useDocumentTitle("Latest Posts");
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = Number(searchParams.get("page")) || 1;

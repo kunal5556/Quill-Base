@@ -10,7 +10,12 @@ export const postsApi = baseApi.injectEndpoints({
           ? [...result.posts.map((post) => ({ type: "Post", id: post._id })), { type: "Post", id: "LIST" }]
           : [{ type: "Post", id: "LIST" }],
     }),
+    getPostBySlug: builder.query({
+      query: (slug) => `/posts/${slug}`,
+      transformResponse: (response) => response.data,
+      providesTags: (result) => (result ? [{ type: "Post", id: result._id }] : []),
+    }),
   }),
 });
 
-export const { useGetPostsQuery } = postsApi;
+export const { useGetPostsQuery, useGetPostBySlugQuery } = postsApi;

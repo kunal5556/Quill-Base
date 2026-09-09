@@ -1,4 +1,5 @@
 import { useParams, useSearchParams } from "react-router-dom";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import ErrorMessage from "../components/common/ErrorMessage";
 import Loader from "../components/common/Loader";
 import Pagination from "../components/common/Pagination";
@@ -21,6 +22,8 @@ function CategoryPosts() {
   } = useGetCategoryBySlugQuery(slug);
 
   const { data, isFetching, error, refetch } = useGetPostsQuery({ page, category: slug });
+
+  useDocumentTitle(category?.name);
 
   const handlePageChange = (nextPage) => {
     searchParams.set("page", nextPage);

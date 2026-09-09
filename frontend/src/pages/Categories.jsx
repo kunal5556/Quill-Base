@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
 import EmptyState from "../components/common/EmptyState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -7,6 +8,8 @@ import { useGetCategoriesQuery } from "../features/categories/categoriesApi";
 import getErrorMessage from "../utils/getErrorMessage";
 
 function Categories() {
+  useDocumentTitle("Categories");
+
   const { data: categories, isLoading, error, refetch } = useGetCategoriesQuery();
 
   if (isLoading) {

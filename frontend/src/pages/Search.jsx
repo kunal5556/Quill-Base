@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import Pagination from "../components/common/Pagination";
 import PostGrid from "../components/posts/PostGrid";
 import { useGetPostsQuery } from "../features/posts/postsApi";
@@ -7,6 +8,9 @@ function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const search = searchParams.get("search") || "";
+
+  useDocumentTitle(search ? `Search: ${search}` : "Search");
+
   const page = Number(searchParams.get("page")) || 1;
 
   const { data, isFetching, error, refetch } = useGetPostsQuery({ page, search });

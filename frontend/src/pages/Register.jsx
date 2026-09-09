@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useRegisterMutation } from "../features/auth/authApi";
@@ -8,6 +9,8 @@ import getErrorMessage from "../utils/getErrorMessage";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function Register() {
+  useDocumentTitle("Create Account");
+
   const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [formErrors, setFormErrors] = useState({});
 

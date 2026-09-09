@@ -21,7 +21,6 @@
     "@reduxjs/toolkit": "^2.12.0",
     "bootstrap": "^5.3.8",
     "dompurify": "^3.4.14",
-    "quill": "^2.0.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-quill-new": "^3.8.3",

@@ -20,6 +20,19 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--qb-accent);
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+}
+
 h1,
 h2,
 h3,
@@ -90,6 +103,112 @@ h5 {
 
 .post-card-title:hover {
   color: var(--qb-primary);
+}
+
+.post-content {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 70ch;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-content p {
+  margin-bottom: 1rem;
+}
+
+.post-content ul,
+.post-content ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--qb-accent);
+  padding: 0.5rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--qb-muted);
+  background-color: #f1f3f6;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+.post-content pre {
+  background-color: #f1f3f6;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.post-content code {
+  background-color: #f1f3f6;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+.post-content a {
+  color: var(--qb-primary);
+  text-decoration: underline;
+}
+
+.admin-sidebar {
+  background-color: var(--qb-surface);
+  border: 1px solid var(--qb-border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.admin-nav-link {
+  color: var(--qb-text);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+}
+
+.admin-nav-link:hover {
+  background-color: var(--qb-background);
+  color: var(--qb-primary);
+}
+
+.admin-nav-link.active {
+  background-color: var(--qb-primary);
+  color: #ffffff;
+}
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--qb-background);
+  color: var(--qb-primary);
+}
+
+.cover-preview {
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.rich-text-editor .ql-container {
+  min-height: 260px;
+  font-size: 1rem;
+}
+
+.rich-text-editor .ql-toolbar,
+.rich-text-editor .ql-container {
+  background-color: var(--qb-surface);
 }
 
 .empty-state {

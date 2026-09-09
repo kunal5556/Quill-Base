@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../features/auth/authApi";
@@ -8,6 +9,8 @@ import getErrorMessage from "../utils/getErrorMessage";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function Login() {
+  useDocumentTitle("Login");
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState({});
 
