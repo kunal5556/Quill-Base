@@ -8,4 +8,6 @@ build/
 npm-debug.log*
 .DS_Store
 .vscode/
+.idea/
 coverage/
+.vercel/

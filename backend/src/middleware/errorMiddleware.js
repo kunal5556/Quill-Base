@@ -6,8 +6,6 @@ const notFound = (req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-  console.error(err);
-
   let statusCode = 500;
   let message = "Something went wrong";
   let errors = null;
@@ -16,6 +14,12 @@ const errorHandler = (err, req, res, next) => {
     statusCode = err.statusCode;
     message = err.message;
     errors = err.errors;
+  } else if (err.type === "entity.parse.failed") {
+    statusCode = 400;
+    message = "Invalid JSON in request body";
+  } else if (err.type === "entity.too.large") {
+    statusCode = 413;
+    message = "Request body is too large";
   } else if (err instanceof multer.MulterError) {
     statusCode = 400;
     message = err.code === "LIMIT_FILE_SIZE" ? "Image must be 2MB or smaller" : "Image upload failed";
@@ -32,6 +36,10 @@ const errorHandler = (err, req, res, next) => {
       field: item.path,
       message: item.message,
     }));
+  }
+
+  if (statusCode >= 500) {
+    console.error(err);
   }
 
   const response = { success: false, message };

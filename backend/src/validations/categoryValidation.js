@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 const name = Joi.string().trim().min(2).max(50).messages({
   "string.empty": "Category name is required",
+  "any.required": "Category name is required",
   "string.min": "Category name must be at least 2 characters",
   "string.max": "Category name cannot be more than 50 characters",
 });

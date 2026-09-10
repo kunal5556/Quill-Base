@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 const content = Joi.string().trim().min(1).max(1000).required().messages({
   "string.empty": "Comment cannot be empty",
+  "any.required": "Comment cannot be empty",
   "string.max": "Comment cannot be more than 1000 characters",
 });
 

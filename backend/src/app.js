@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const ApiError = require("./utils/ApiError");
 const sendResponse = require("./utils/sendResponse");
 const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -11,7 +12,24 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: false }));
+const allowedOrigins = (process.env.CLIENT_URL || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      callback(new ApiError(403, "This origin is not allowed to use the API"));
+    },
+    credentials: false,
+  })
+);
+
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 

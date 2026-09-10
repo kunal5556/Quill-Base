@@ -3,6 +3,7 @@ const { objectId } = require("./commonValidation");
 
 const title = Joi.string().trim().min(3).max(150).messages({
   "string.empty": "Title is required",
+  "any.required": "Title is required",
   "string.min": "Title must be at least 3 characters",
   "string.max": "Title cannot be more than 150 characters",
 });
@@ -11,9 +12,24 @@ const excerpt = Joi.string().trim().max(300).allow("").messages({
   "string.max": "Excerpt cannot be more than 300 characters",
 });
 
-const content = Joi.string().trim().max(50000).messages({
+const hasVisibleContent = (value, helpers) => {
+  const plainText = value
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .trim();
+
+  if (!plainText && !/<img\s/i.test(value)) {
+    return helpers.error("any.invalid");
+  }
+
+  return value;
+};
+
+const content = Joi.string().trim().max(50000).custom(hasVisibleContent).messages({
   "string.empty": "Content is required",
+  "any.required": "Content is required",
   "string.max": "Content is too long",
+  "any.invalid": "Content is required",
 });
 
 const status = Joi.string().valid("draft", "published").messages({
@@ -27,6 +43,7 @@ const coverImage = Joi.object({
 
 const category = objectId.messages({
   "string.empty": "Category is required",
+  "any.required": "Category is required",
   "string.pattern.base": "Invalid category id",
 });
 

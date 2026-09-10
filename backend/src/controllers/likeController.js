@@ -12,7 +12,7 @@ const likePost = asyncHandler(async (req, res) => {
   try {
     await Like.create({ post: post._id, user: req.user._id });
 
-    const updatedPost = await Post.findByIdAndUpdate(post._id, { $inc: { likeCount: 1 } }, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(post._id, { $inc: { likeCount: 1 } }, { returnDocument: "after" });
     likeCount = updatedPost.likeCount;
   } catch (error) {
     if (error.code !== 11000) {
@@ -34,7 +34,7 @@ const unlikePost = asyncHandler(async (req, res) => {
     const updatedPost = await Post.findOneAndUpdate(
       { _id: post._id, likeCount: { $gt: 0 } },
       { $inc: { likeCount: -1 } },
-      { new: true }
+      { returnDocument: "after" }
     );
 
     if (updatedPost) {
