@@ -910,6 +910,32 @@ folder is used in production.
 `vercel.json` already contains the rewrite that sends every path to `index.html`, so refreshing a
 page such as `/posts/my-first-post` works instead of returning a 404.
 
+### 4b. Deploying the frontend to Render instead of Vercel
+
+Render works just as well, but a static site needs one extra setting or every deep link will 404.
+
+1. Create a **New Static Site** and connect the same repository.
+2. Set:
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
+3. Add the environment variable `VITE_API_URL` pointing at your API, for example
+   `https://quill-base-api.onrender.com/api`.
+4. **Add the SPA rewrite rule.** Open the static site → **Redirects/Rewrites** → **Add Rule**:
+
+   | Source | Destination | Action |
+   |---|---|---|
+   | `/*` | `/index.html` | Rewrite |
+
+   Without this rule, opening or refreshing a URL such as `/categories` or `/posts/my-first-post`
+   returns a 404, because Render looks for a real file at that path. The rewrite tells it to serve
+   `index.html` and let React Router handle the address. `vercel.json` does the same job on Vercel,
+   but Render ignores that file.
+
+The repository also contains a `render.yaml` blueprint at the root. If you deploy with
+**New → Blueprint** instead of creating the services by hand, it sets up both services, the health
+check and the rewrite rule automatically. You still fill in the secret values yourself.
+
 ### 5. Connect the two
 
 Once you know your Vercel URL, go back to Render and make sure `CLIENT_URL` matches it exactly

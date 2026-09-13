@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import ConfirmDialog from "../../components/common/ConfirmDialog";
 import ErrorMessage from "../../components/common/ErrorMessage";
@@ -52,7 +52,7 @@ function PostForm() {
   const [isLeaveConfirmOpen, setIsLeaveConfirmOpen] = useState(false);
   const [loadedPostId, setLoadedPostId] = useState(null);
 
-  const { data: categories = [] } = useGetCategoriesQuery();
+  const { data: categories = [], isLoading: isLoadingCategories } = useGetCategoriesQuery();
   const {
     data: existingPost,
     isLoading: isLoadingPost,
@@ -65,6 +65,7 @@ function PostForm() {
 
   const isSaving = isCreating || isUpdating;
   const saveError = createError || updateError;
+  const hasCategories = categories.length > 0;
 
   if (existingPost && existingPost._id !== loadedPostId) {
     setLoadedPostId(existingPost._id);
@@ -214,6 +215,7 @@ function PostForm() {
             className={`form-select ${formErrors.category ? "is-invalid" : ""}`}
             value={form.category}
             onChange={(event) => updateField("category", event.target.value)}
+            disabled={!hasCategories}
           >
             <option value="">Choose a category</option>
             {categories.map((category) => (
@@ -223,6 +225,13 @@ function PostForm() {
             ))}
           </select>
           {formErrors.category && <div className="invalid-feedback">{formErrors.category}</div>}
+
+          {!isLoadingCategories && !hasCategories && (
+            <div className="alert alert-warning mt-2 mb-0">
+              There are no categories yet, and every post needs one.{" "}
+              <Link to="/admin/categories">Add a category</Link> first, then come back here.
+            </div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -243,11 +252,16 @@ function PostForm() {
             type="button"
             className="btn btn-outline-secondary"
             onClick={() => handleSave("draft")}
-            disabled={isSaving}
+            disabled={isSaving || !hasCategories}
           >
             Save Draft
           </button>
-          <button type="button" className="btn btn-primary" onClick={() => handleSave("published")} disabled={isSaving}>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => handleSave("published")}
+            disabled={isSaving || !hasCategories}
+          >
             {isSaving ? "Saving..." : "Publish"}
           </button>
           <button type="button" className="btn btn-link" onClick={handleCancel}>
